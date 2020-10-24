@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import {BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom';
+import Admin from './pages/admin';
+import Login from './pages/login';
+import Layout from './components/layout'
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+    <Layout>
+      <Router>
+        <Switch>
+          <Route exact path='/'  render={(props) => <Admin props={props}/> }  />
+          <Route exact path='/login'  render={(props) => <Login props={props}/> }/>
+          <Route exact path='/user'  render={(props) => <Login props={props}/> }/>
+          <Route exact path='/play'  render={(props) => <Login props={props}/> }/>
+        </Switch>
+      </Router>
+    </Layout>
+    </>
   );
 }
+
+/* Ejemplos redirect login-redux 
+  <Route exact path='/signup' render={(props) => isUserAuthenticated() ? <Redirect to='/users' /> : <Signup props={props} />} />
+  <Route exact path='/users' render={(props) => isUserAuthenticated() ? <Users props={props}/> : <Redirect to='/' />} />
+*/
 
 export default App;

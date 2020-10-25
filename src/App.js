@@ -2,22 +2,25 @@ import React from 'react'
 import {BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom';
 import Admin from './pages/admin';
 import Login from './pages/login';
-import Layout from './components/layout'
+import Layout from './components/layout';
+import Palette from './palette';
 
 
 function App() {
   return (
     <>
-    <Layout>
-      <Router>
-        <Switch>
-          <Route exact path='/'  render={(props) => <Admin props={props}/> }  />
-          <Route exact path='/login'  render={(props) => <Login props={props}/> }/>
-          <Route exact path='/user'  render={(props) => <Login props={props}/> }/>
-          <Route exact path='/play'  render={(props) => <Login props={props}/> }/>
-        </Switch>
-      </Router>
-    </Layout>
+    <Palette>
+      <Layout>
+        <Router>
+          <Switch>
+            <Route exact path='/'  render={(props) => <Admin props={props}/> }  />
+            <Route exact path='/login'  render={(props) => <Login props={props}/> }/>
+            <Route exact path='/user'  render={(props) => <Login props={props}/> }/>
+            <Route exact path='/play'  render={(props) => <Login props={props}/> }/>
+          </Switch>
+        </Router>
+      </Layout>
+    </Palette>
     </>
   );
 }

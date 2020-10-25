@@ -1,38 +1,29 @@
 import React from 'react';
-import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import { Button,Grid, Link } from '@material-ui/core';
+import {makeStyles} from '@material-ui/core/styles'
+import { Button,Grid, Link, Paper } from '@material-ui/core';
 
-
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    backgroundColor: theme.palette.background,
+    color: theme.palette.fontColor,
+    minHeight: '100vh'
+  },
+}));
 
 
 const Layout = ({children}) => {
+    const classes = useStyles();
 
-    const [darkmode, setdarkMode] = React.useState(true);
-
-    const theme = createMuiTheme({
-        palette: {
-          type: darkmode ? 'dark': 'light' ,
-          primary: {
-            main: '#aff',
-          },
-          secondary: {
-            main: '#c00',
-          },
-          background: {
-            main: darkmode ? '#f2f' : '#242'
-          },
-        },
-      })
     return ( 
     <>
-    <ThemeProvider theme={theme}>
-        <Grid container justify='center'>
-            <Link href='/'>
-                <Button fullWidth color='secondary'>Ir a administrador</Button>
-            </Link>
-        </Grid>
+    <Paper className={classes.paper}>
+      <Grid container justify='center'>
+        <Link href='/' underline='none'>
+            <Button fullWidth color='secondary'>Ir a administrador</Button>
+        </Link>
+      </Grid>
         {children}
-    </ThemeProvider>
+    </Paper>
     </> 
     );
 }

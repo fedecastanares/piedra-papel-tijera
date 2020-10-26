@@ -15,6 +15,7 @@ const Palette = ({children}) => {
           },
           background: darkmode ? '#181818' : '#f9f9f9',
           fontColor: darkmode ? '#fff' : '#030303',
+          listPlayers: darkmode ? '#fff' : '#e3e3e3',
         },
       });
 

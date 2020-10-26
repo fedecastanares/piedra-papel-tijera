@@ -3,10 +3,10 @@ import Login from '../components/login'
 import Copyright from '../components/copyright'
 
 
-const LoginPage = () => {
+const LoginPage = ({props}) => {
     return ( 
         <>
-            <Login/>
+            <Login props={props}/>
             <Copyright/>
         </>
      );

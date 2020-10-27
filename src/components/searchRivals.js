@@ -1,42 +1,52 @@
-import React from 'react';
-import {Grid, Container, List, ListItem, ListItemText, Button} from '@material-ui/core';
+import React, {useContext, Fragment} from 'react';
+import {Grid, Container, List, ListItem, ListItemText, Typography,Divider} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { playersRequest } from '../requests/play';
+
+import {DataContext} from '../context/dataContext'
 
 const useStyles = makeStyles((theme) => ({
     root: {
         borderRadius: '1vh',
         backgroundColor: theme.palette.listPlayers,
     },
+    divider: {
+        backgroundColor: theme.palette.divider,
+    }
   }));
 
 const SearchRivals = () => {
     const classes = useStyles();
-    const [players, setplayers] = React.useState([]);
-    
-    const handleClick = async () => {
-        const players = await playersRequest();
-        setplayers(players);
+    const {rivals} = useContext(DataContext);
+
+    const handleClick = id => {
+        rivals.selectRivalById(id);
     }
+    
     return ( 
         <>
         <Container>
             <Grid container>
-                <Grid item>
-                    Buscador
-                </Grid>
-                <Grid item>
-                    <Button variant="contained" color="primary" onClick={handleClick}>Buscar</Button>
-                </Grid>
+                <Grid item xs={12}>
+                    <Typography variant="h3" component="h3" gutterBottom color='primary' align='center' >Desafiar</Typography></Grid>
                 <Grid item xs={12}>
                     <div className={classes.root}>
                         <List component="nav" aria-label="players">
-                            {players.map(player => (
-                                <ListItem divider button key={player._id}>
-                                <ListItemText>
-                                    {player.name}
-                                </ListItemText>
-                            </ListItem>
+                            {rivals && rivals.players.map(rival => (
+                                <Fragment key={rival._id}  >
+                                <ListItem button onClick={() => handleClick(rival._id)}>
+                                    <ListItemText >
+                                        <Grid container spacing={3} id={rival._id}>
+                                            <Grid item>
+                                                <Typography variant="body1" component="p" gutterBottom color='inherit' align='center' >{rival.name}</Typography> 
+                                            </Grid>
+                                            <Grid item>
+                                                <Typography variant="body1" component="p" gutterBottom color='inherit' align='center' >{"id: " + rival._id}</Typography>
+                                            </Grid>
+                                        </Grid>
+                                    </ListItemText>
+                                </ListItem>
+                                <Divider className={classes.divider} />
+                                </Fragment>
                             ))}
                         </List>
                     </div>

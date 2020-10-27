@@ -6,23 +6,26 @@ import Play from './pages/play';
 import Layout from './components/layout';
 import Palette from './palette';
 import { isUserAuthenticated } from './requests/auth';
+import DataProvider from './context/dataContext';
 
 
 function App() {
   return (
     <>
-    <Palette>
-      <Layout>
-        <Router>
-          <Switch>
-            <Route exact path='/'  render={(props) => isUserAuthenticated() ? <Admin props={props}/> : <Redirect to='/login' /> }  />
-            <Route exact path='/login'  render={(props) => isUserAuthenticated() ? <Redirect to='/' /> : <Login props={props}/> }/>
-            <Route exact path='/user'  render={(props) => isUserAuthenticated() ? <Admin props={props}/> : <Redirect to='/login' /> }/>
-            <Route exact path='/play'  render={(props) => isUserAuthenticated() ? <Play props={props}/> : <Redirect to='/login' />}/>
-          </Switch>
-        </Router>
-      </Layout>
-    </Palette>
+    <DataProvider>
+      <Palette>
+        <Layout>
+          <Router>
+            <Switch>
+              <Route exact path='/'  render={(props) => isUserAuthenticated() ? <Admin props={props}/> : <Redirect to='/login' /> }  />
+              <Route exact path='/login'  render={(props) => isUserAuthenticated() ? <Redirect to='/' /> : <Login props={props}/> }/>
+              <Route exact path='/user'  render={(props) => isUserAuthenticated() ? <Admin props={props}/> : <Redirect to='/login' /> }/>
+              <Route exact path='/play'  render={(props) => isUserAuthenticated() ? <Play props={props}/> : <Redirect to='/login' />}/>
+            </Switch>
+          </Router>
+        </Layout>
+      </Palette>
+    </DataProvider>
     </>
   );
 }

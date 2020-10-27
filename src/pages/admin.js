@@ -1,10 +1,11 @@
-import React from 'react';
+import React , {useContext} from 'react';
 import logo from '../logo.svg';
 import {Typography, Grid, Button, Link, Container} from '@material-ui/core'
 import {getUser, isUserAuthenticated, deauthenticateUser} from '../requests/auth';
 import { green, red } from '@material-ui/core/colors';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import { makeStyles } from '@material-ui/core/styles';
+import {DataContext} from '../context/dataContext'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -26,10 +27,11 @@ const useStyles = makeStyles((theme) => ({
 
 const Index = (props) => {
     const classes = useStyles();
-
+    const {setauth} = useContext(DataContext)
     const handleClick = () => {
         deauthenticateUser();
         props.props.history.push('/login');
+        setauth(false);
     }
     return (
         <>
@@ -60,7 +62,7 @@ const Index = (props) => {
             </Grid>
             <Grid container style={{marginTop: 50}} justify='center' spacing={3}>
                 <Grid container>
-                    <Button variant="contained" color="primary" component="span" fullWidth onClick={handleClick}>Desloguear</Button>
+                    <Button variant="contained" color="primary" component="span" fullWidth onClick={() => handleClick()}>Desloguear</Button>
                 </Grid>
                 <Grid item>
                     <Typography variant="body1" gutterBottom color='primary' align='center'>{isUserAuthenticated()? getUser(): "Sin informacion"}</Typography>

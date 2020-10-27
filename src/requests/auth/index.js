@@ -24,3 +24,7 @@ export const getToken = () => {
 export const getUser = () => {
     return localStorage.getItem('user').replace(/['"]+/g, '') 
 }
+
+export const getNewToken = () => {
+    // funcion que al tener credenciales invalidas borre las que tenga y vaya al logueo
+}

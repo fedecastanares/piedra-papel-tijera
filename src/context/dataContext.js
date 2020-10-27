@@ -10,7 +10,7 @@ const DataProvider = ({children}) => {
     const [rivals, setRivals] = useState(false);
 
     useEffect(() => {
-       if(isUserAuthenticated) {
+       if(isUserAuthenticated()) {
            setauth(true)
        } else {
            setauth(false)

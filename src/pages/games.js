@@ -4,6 +4,7 @@ import SearchRivals from '../components/searchRivals';
 import MyGames from '../components/myGames'
 
 const PlayPage = () => {
+    
     return ( 
         <>
             <SearchRivals/>

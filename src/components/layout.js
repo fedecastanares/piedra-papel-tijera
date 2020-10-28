@@ -1,6 +1,7 @@
 import React from 'react';
 import {makeStyles} from '@material-ui/core/styles'
 import { Button,Grid, Link, Paper } from '@material-ui/core';
+import { isUserAuthenticated } from '../requests/auth';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -17,12 +18,14 @@ const Layout = ({children}) => {
     return ( 
     <>
     <Paper className={classes.paper}>
-      <Grid container justify='center'>
-        <Link href='/' underline='none'>
-            <Button fullWidth color='secondary'>Ir a administrador</Button>
-        </Link>
-      </Grid>
-        {children}
+      {isUserAuthenticated() &&
+        <Grid container justify='center'>
+          <Link href='/' underline='none'>
+              <Button fullWidth color='secondary'>Ir a administrador</Button>
+          </Link>
+        </Grid>   
+      }
+    {children}
     </Paper>
     </> 
     );

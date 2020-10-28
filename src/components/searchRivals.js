@@ -1,8 +1,8 @@
-import React, {useContext, Fragment} from 'react';
+import React, {Fragment, useState, useEffect} from 'react';
 import {Grid, List, ListItem, ListItemText, Typography,Divider} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-import {DataContext} from '../context/dataContext'
+import {playersRequest} from '../requests/play'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -16,7 +16,16 @@ const useStyles = makeStyles((theme) => ({
 
 const SearchRivals = () => {
     const classes = useStyles();
-    const {rivals} = useContext(DataContext);
+    const [rivals, setRivals] = useState(false);
+
+    useEffect(() => {
+        const getPlayers = async string => {
+            const players = await playersRequest();
+            setRivals(players); 
+        }
+        getPlayers();
+    },[])
+    
 
     const handleClick = id => {
         // Confirmar si quiere enviar peticion

@@ -5,7 +5,7 @@ import {getUser, isUserAuthenticated, deauthenticateUser} from '../requests/auth
 import { green, red } from '@material-ui/core/colors';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import { makeStyles } from '@material-ui/core/styles';
-import {DataContext} from '../context/dataContext'
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -25,13 +25,11 @@ const useStyles = makeStyles((theme) => ({
     }
   }));
 
-const Index = (props) => {
+const Index = ({history}) => {
     const classes = useStyles();
-    const {setauth} = useContext(DataContext)
     const handleClick = () => {
         deauthenticateUser();
-        props.props.history.push('/login');
-        setauth(false);
+        history.push('/login');
     }
     return (
         <>
@@ -55,8 +53,8 @@ const Index = (props) => {
                     </Link>
                 </Grid>
                 <Grid item>
-                    <Link href='/play' underline='none'>
-                        <Button variant="contained" color="primary" component="span">Play</Button>
+                    <Link href='/games' underline='none'>
+                        <Button variant="contained" color="primary" component="span">Games</Button>
                     </Link>
                 </Grid>
             </Grid>

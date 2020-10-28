@@ -1,9 +1,9 @@
-import React, {useContext, Fragment} from 'react';
+import React, {useState, Fragment, useEffect} from 'react';
 
-import {Grid, List, ListItem, ListItemText, Typography,Divider} from '@material-ui/core';
+import {Grid, List, ListItem, ListItemText, Typography,Divider, Link} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { getGamesRequest } from '../requests/games'
 
-import {DataContext} from '../context/dataContext'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -17,10 +17,18 @@ const useStyles = makeStyles((theme) => ({
 
 const MyGames = () => {
     const classes = useStyles();
-    const {games} = useContext(DataContext);
+    const [games, setgames] = useState(false)
+    
+    useEffect(() => {
+        const getGames = async string => {
+            const games = await getGamesRequest();
+            setgames(games);
+        }
+        getGames();
+    }, []);
 
     const handleClick = id => {
-        // Jugar game
+        
     }
     
     return ( 
@@ -31,20 +39,22 @@ const MyGames = () => {
                 <Grid item xs={12}>
                     <div className={classes.root}>
                         <List component="nav" aria-label="players">
-                            {games && games.map(game => (
+                            {games && games.games.map(game => (
                                 <Fragment key={game._id}  >
-                                <ListItem button onClick={() => handleClick(game._id)}>
-                                    <ListItemText >
-                                        <Grid container spacing={3}>
-                                            <Grid item>
-                                                <Typography variant="body1" component="p" gutterBottom color='inherit' align='center' >{"Rival "+ game.idRival}</Typography> 
-                                            </Grid>
-                                            <Grid item>
-                                                <Typography variant="body1" component="p" gutterBottom color='inherit' align='center' >{"Status: " + game.status}</Typography>
-                                            </Grid>
-                                        </Grid>
-                                    </ListItemText>
-                                </ListItem>
+                                    <Link href={`/game/${game._id}`} underline='none'>
+                                        <ListItem button onClick={() => handleClick(game._id)}>
+                                            <ListItemText >
+                                                <Grid container spacing={3}>
+                                                    <Grid item>
+                                                        <Typography variant="body1" component="p" gutterBottom color='inherit' align='center' >{"Rival "+ game.idRival}</Typography> 
+                                                    </Grid>
+                                                    <Grid item>
+                                                        <Typography variant="body1" component="p" gutterBottom color='inherit' align='center' >{"Status: " + game.status}</Typography>
+                                                    </Grid>
+                                                </Grid>
+                                            </ListItemText>
+                                        </ListItem>
+                                    </Link>
                                 <Divider className={classes.divider} />
                                 </Fragment>
                             ))}

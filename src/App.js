@@ -1,9 +1,7 @@
 import React from 'react'
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
-import Admin from './pages/admin';
 import Login from './pages/login';
-import Games from './pages/games';
-import Game from './pages/game';
+import User from './pages/user';
 import Layout from './components/layout';
 import Palette from './palette';
 import DataProvider from './context/dataContext';
@@ -19,10 +17,7 @@ function App() {
           <Router>
             <Switch>
               <Route exact path="/login" component={Login} />
-              <PrivateRoute exact path='/' component={Admin} />
-              <PrivateRoute exact path='/user'  component={Admin} />
-              <PrivateRoute exact path='/games' component={Games} />
-              <PrivateRoute exact path='/game/:id'  component={Game}/>
+              <PrivateRoute exact path='/' component={User} />
             </Switch>
           </Router>
         </Layout>

@@ -1,8 +1,9 @@
-import React, {useState, Fragment, useEffect} from 'react';
+import React, {Fragment, useContext} from 'react';
 
 import {Grid, List, ListItem, ListItemText, Typography,Divider, Link} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { getGamesRequest } from '../requests/games'
+import {DataContext} from "../context/dataContext";
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -17,15 +18,9 @@ const useStyles = makeStyles((theme) => ({
 
 const MyGames = () => {
     const classes = useStyles();
-    const [games, setgames] = useState(false)
+    const {games} = useContext(DataContext);
     
-    useEffect(() => {
-        const getGames = async string => {
-            const games = await getGamesRequest();
-            setgames(games);
-        }
-        getGames();
-    }, []);
+
 
     const handleClick = id => {
         

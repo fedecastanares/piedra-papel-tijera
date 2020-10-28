@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {makeStyles} from '@material-ui/core/styles'
 import { Button,Grid, Link, Paper } from '@material-ui/core';
-import { isUserAuthenticated } from '../requests/auth';
+import { isUserAuthenticated, deauthenticateUser } from '../requests/auth';
+import {DataContext} from '../context/dataContext'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -14,6 +15,12 @@ const useStyles = makeStyles((theme) => ({
 
 const Layout = ({children}) => {
     const classes = useStyles();
+    const {setauth} = useContext(DataContext)
+
+    const handleClick = () => {
+      deauthenticateUser();
+      setauth(false);
+    }
 
     return ( 
     <>
@@ -21,7 +28,7 @@ const Layout = ({children}) => {
       {isUserAuthenticated() &&
         <Grid container justify='center'>
           <Link href='/' underline='none'>
-              <Button fullWidth color='secondary'>Ir a administrador</Button>
+              <Button fullWidth color='secondary' onClick={handleClick}>Desloguear</Button>
           </Link>
         </Grid>   
       }

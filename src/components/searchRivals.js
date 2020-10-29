@@ -16,12 +16,16 @@ const useStyles = makeStyles((theme) => ({
 const SearchRivals = () => {
     const classes = useStyles();
     
-    const {rivals} = useContext(DataContext);
+    const {rivals, games, setActiveGame} = useContext(DataContext);
 
     const handleClick = id => {
-        // Confirmar si quiere enviar peticion
-        rivals.selectRivalById(id);
-        // Agregar a Games
+        const newGameModel = {
+            game: {
+                idRival: id,
+                idHost: games.id,
+                status: "newGame"
+            }}
+        setActiveGame(newGameModel)
     }
     
     return ( 

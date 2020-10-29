@@ -18,12 +18,13 @@ const useStyles = makeStyles((theme) => ({
 
 const MyGames = () => {
     const classes = useStyles();
-    const {games} = useContext(DataContext);
+    const {games, setActiveGame} = useContext(DataContext);
     
 
 
     const handleClick = id => {
-        
+        const dataGame = games.games.find(game => game._id == id);
+        setActiveGame({game:dataGame});
     }
     
     return ( 
@@ -36,7 +37,6 @@ const MyGames = () => {
                         <List component="nav" aria-label="players">
                             {games && games.games.map(game => (
                                 <Fragment key={game._id}  >
-                                    <Link href={`/game/${game._id}`} underline='none'>
                                         <ListItem button onClick={() => handleClick(game._id)}>
                                             <ListItemText >
                                                 <Grid container spacing={3}>
@@ -49,7 +49,6 @@ const MyGames = () => {
                                                 </Grid>
                                             </ListItemText>
                                         </ListItem>
-                                    </Link>
                                 <Divider className={classes.divider} />
                                 </Fragment>
                             ))}

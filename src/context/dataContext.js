@@ -9,7 +9,8 @@ const DataProvider = ({children}) => {
 
     const [auth, setauth] = useState(undefined);
     const [rivals, setRivals] = useState(false);
-    const [games, setgames] = useState(false)
+    const [games, setgames] = useState(false);
+    const [activeGame, setActiveGame] = useState(null);
 
     useEffect(() => {
         const getPlayers = async string => {
@@ -30,9 +31,11 @@ const DataProvider = ({children}) => {
                 auth,
                 rivals,
                 games,
+                activeGame,
                 setauth,
                 setRivals,
                 setgames,
+                setActiveGame
             }}
         >
             {children}

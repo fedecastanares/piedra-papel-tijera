@@ -2,7 +2,7 @@ import React from 'react';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 const Palette = ({children}) => {
-    const [darkmode, setdarkMode] = React.useState(true);
+    const [darkmode, setdarkMode] = React.useState(false);
 
     const theme = createMuiTheme({
         palette: {

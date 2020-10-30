@@ -1,7 +1,10 @@
 import React, { useContext, useState } from 'react';
 import {DataContext} from '../context/dataContext'
 import { makeStyles } from '@material-ui/core/styles';
-import {Container, Grid, Typography, Button} from '@material-ui/core'
+import {Container, Grid,  Button} from '@material-ui/core'
+import Status from '../components/status';
+import PlayerPlays from '../components/playerPlays';
+import {getUser} from '../requests/auth'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -12,56 +15,56 @@ const useStyles = makeStyles((theme) => ({
 
 const Game = () => {
     const classes = useStyles();
-    const [userPlays, setUserPlays] = useState('')
-    const {activeGame, games, rivals, setActiveGame} = useContext(DataContext);
+    const [userPlays, setUserPlays] = useState('');
+    const {activeGame, games, rivals, setActiveGame, setgames} = useContext(DataContext);
     const whoIs = activeGame.game.idHost === games.id ? 'idHost' : 'idRival';
     const playerPlays = whoIs === 'idHost' ? activeGame.game.hostPlay : activeGame.game.rivalPlay;
-    const conditionalButton = (activeGame.game.status === "newGame" || !(activeGame.game.status === 'pending' && whoIs === 'idHost')) && userPlays=='' ? true : false;
+
+
+    const conditionalButtonEvaluation = () => {
+        switch(activeGame.game.status){
+            case 'pending':
+                 if (whoIs === 'idHost'){
+                     console.log('1')
+                    return true
+                } else if( whoIs === 'idRival' && userPlays === ''){
+                    console.log('2')
+                    return true
+                } else {
+                    console.log('3')
+                    console.log(userPlays === '')
+                    console.log(whoIs === 'idRival')
+                    return false
+                }
+            case 'newGame': 
+                return userPlays === ''
+            default:
+                console.log('entro en default')
+        }
+    }
+    const conditionalButton = conditionalButtonEvaluation();
+    
 
     const handlePlays = () => {
         if(activeGame.game.status === "newGame") {
-            rivals.selectRivalById(activeGame.game.idRival);
-        }
-    }
-    const Status = () => {
-        switch(activeGame.game.status) {
-            case 'pending':
-                if (whoIs === 'idHost'){
-                    return <Typography variant="body1" component="p" gutterBottom color='inherit' align='center' >Esperando que juegue el oponente</Typography>} 
-                else{
-                    return <Typography variant="body1" component="p" gutterBottom color='inherit' align='center' >El rival esta esperando que juegues</Typography>}
-            case 'finish':
-                return <Typography variant="body1" component="p" gutterBottom color='inherit' align='center' >Partida completada</Typography> 
-            case 'rejected':
-                return <Typography variant="body1" component="p" gutterBottom color='inherit' align='center' >El jugador no acepto la solicitud</Typography>
-            case 'newGame':
-                return <Typography variant="body1" component="p" gutterBottom color='inherit' align='center' >Nueva partida</Typography>      
-            default:
-                return <Typography variant="body1" component="p" gutterBottom color='inherit' align='center' >Ocurrio un error leyendo el status</Typography> 
-        }
-        
-    }
-    
-
-    const Play = () => {
-        if (playerPlays != undefined){
-            return (<Button fullWidth variant="contained" color="primary" disabled> {playerPlays} </Button>) 
-        } else {
-            return(
-                <>
-                <Grid container spacing={2}>
-                    <Grid item xs={4}>
-                        <Button fullWidth variant={userPlays == "piedra" ? "contained" : "outlined"} color="primary" onClick={() => setUserPlays("piedra")}>Piedra</Button>
-                    </Grid>
-                    <Grid item xs={4}>
-                        <Button fullWidth variant={userPlays == "papel" ? "contained" : "outlined"} color="primary" onClick={() => setUserPlays("papel")}>Papel</Button>
-                    </Grid>
-                    <Grid item xs={4}>
-                        <Button fullWidth variant={userPlays == "tijera" ? "contained" : "outlined"} color="primary" onClick={() => setUserPlays("tijera")}>Tijera</Button>
-                    </Grid>
-                </Grid>
-                </>
-            ) 
+            const nameUser = getUser();
+            const newGame = async () =>{
+                const id = await rivals.selectRivalById(activeGame.game.idRival, userPlays, activeGame.game.nameRival, nameUser);
+                setgames({
+                    games:
+                    [{
+                        _id : id, 
+                        idHost: games.games.id, 
+                        idRival: activeGame.game.idRival, 
+                        hostPlay: userPlays, 
+                        status: "pending",
+                        nameRival: activeGame.game.nameRival
+                    }].concat(...games.games)
+                    
+                });
+                setActiveGame(null);
+            }
+            newGame();
         }
     }
 
@@ -70,18 +73,32 @@ const Game = () => {
             <Container className={classes.container}>
                 <Grid container spacing={3} style={{height: '88%'}}>
                     <Grid item xs={12}>
-                        <Status/>
+                        <Status whoIs={whoIs} />
                     </Grid>
                     <Grid item xs={12}>
-                        <Play/>
+                        <PlayerPlays 
+                        userPlays={userPlays} 
+                        setUserPlays={setUserPlays} 
+                        playerPlays={playerPlays}/>
                     </Grid>
                 </Grid>
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
-                        <Button fullWidth variant="outlined" color="secondary" onClick={() => setActiveGame(null)}> {activeGame.game.status === "newGame" ? "Cancelar" : "Atras" } </Button>
+                        <Button 
+                            fullWidth 
+                            variant="outlined" 
+                            color="secondary" 
+                            onClick={() => setActiveGame(null)}> {activeGame.game.status === "newGame" ? "Cancelar" : "Atras" } 
+                        </Button>
                     </Grid> 
                     <Grid item xs={12}>
-                        <Button fullWidth variant="contained" color="primary" disabled={conditionalButton} onClick={handlePlays}>{conditionalButton ? "Esperando" : `Jugar  ${userPlays}`} </Button>
+                        <Button 
+                            fullWidth 
+                            variant="contained" 
+                            color="primary" 
+                            disabled={conditionalButton} 
+                            onClick={handlePlays}>{conditionalButton ? "Esperando" : `Jugar  ${userPlays}`} 
+                        </Button>
                     </Grid> 
                 </Grid>
             </Container>

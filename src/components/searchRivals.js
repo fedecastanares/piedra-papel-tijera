@@ -18,12 +18,13 @@ const SearchRivals = () => {
     
     const {rivals, games, setActiveGame} = useContext(DataContext);
 
-    const handleClick = id => {
+    const handleClick = (id, nameRival) => {
         const newGameModel = {
             game: {
                 idRival: id,
                 idHost: games.id,
-                status: "newGame"
+                status: "newGame",
+                nameRival: nameRival
             }}
         setActiveGame(newGameModel)
     }
@@ -38,7 +39,7 @@ const SearchRivals = () => {
                         <List component="nav" aria-label="players">
                             {rivals && rivals.players.map(rival => (
                                 <Fragment key={rival._id}  >
-                                <ListItem button onClick={() => handleClick(rival._id)}>
+                                <ListItem button onClick={() => handleClick(rival._id, rival.name)}>
                                     <ListItemText >
                                         <Grid container spacing={3}>
                                             <Grid item>

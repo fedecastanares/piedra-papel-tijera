@@ -15,12 +15,14 @@ export const playersRequest = async string => {
     const players = await playeresReq();
     return ({
         players: players,
-        async selectRivalById(id) {
+        async selectRivalById(id, play, nameRival, nameHost) {
             const createGameById = async id => {
                 const data = {
                     "idRival": id,
-                    "hostPlay": "piedra",
-                    "status" : "pending"
+                    "hostPlay": play,
+                    "status" : "pending",
+                    "nameRival": nameRival,
+                    "nameHost" : nameHost,
                 };
                 try {
                     const response = await axiosApiInstance.post(`http://${process.env.REACT_APP_BASE_URL}:${process.env.REACT_APP_PORT}/games`, data

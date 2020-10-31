@@ -1,14 +1,43 @@
 import React, {useContext} from 'react';
 import {Button, Grid} from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
-import {DataContext} from '../context/dataContext'
+import {DataContext} from '../context/dataContext';
+import { makeStyles } from '@material-ui/core/styles';
+import piedra from '../imgs/piedra.png'
+import papel from '../imgs/papel.png'
+import tijera from '../imgs/tijera.png'
+
+const useStyles = makeStyles((theme) => ({
+    img: {
+        height: '30vh',
+        width: 'auto'
+    }
+}));
 
 const Results = ({userPlays, setUserPlays, playerPlays}) => {
-
+    const classes = useStyles();
     const {activeGame, games} = useContext(DataContext);
-    const whoIam = games.id == activeGame.game.idHost ? "host" : 'rival'
+    const whoIam = games.id == activeGame.game.idHost ? "host" : 'rival';
 
-    const PlayerPlays = ({userPlays, setUserPlays, playerPlays}) => {
+    const handleClick = userPlay => {
+        setUserPlays(userPlay)
+        UserPlaysImg(userPlays)
+    }
+
+    const UserPlaysImg = () => {
+        switch(userPlays) {
+            case 'piedra':
+                return <img className={classes.img} src={piedra} alt={`Jugo ${userPlays}`} />
+            case 'papel':
+                return <img className={classes.img} src={papel} alt={`Jugo ${userPlays}`} />
+            case 'tijera':
+                return <img className={classes.img} src={tijera} alt={`Jugo ${userPlays}`} />
+            default:
+                return <div className={classes.img}></div>
+        }
+    }
+
+    const PlayerPlays = ({userPlays, playerPlays}) => {
         if (activeGame.game.hostPlay !== undefined){
             return (
                 <Button fullWidth variant="contained" color="primary" disabled> 
@@ -23,15 +52,22 @@ const Results = ({userPlays, setUserPlays, playerPlays}) => {
             } else {
                 return(
                     <>
+                    <Grid container justify='center'>
+                        <Grid item>
+                            <div className='animate__animated animate__fadeInUp'>
+                                <UserPlaysImg/>
+                            </div>
+                        </Grid>
+                    </Grid>
                     <Grid container spacing={2}>
                         <Grid item xs={4}>
-                            <Button fullWidth variant={userPlays === "piedra" ? "contained" : "outlined"} color="primary" onClick={() => setUserPlays("piedra")}>Piedra</Button>
+                            <Button fullWidth variant={userPlays === "piedra" ? "contained" : "outlined"} color="primary" onClick={() => handleClick('piedra')}>Piedra</Button>
                         </Grid>
                         <Grid item xs={4}>
-                            <Button fullWidth variant={userPlays === "papel" ? "contained" : "outlined"} color="primary" onClick={() => setUserPlays("papel")}>Papel</Button>
+                            <Button fullWidth variant={userPlays === "papel" ? "contained" : "outlined"} color="primary" onClick={() => handleClick('papel')}>Papel</Button>
                         </Grid>
                         <Grid item xs={4}>
-                            <Button fullWidth variant={userPlays === "tijera" ? "contained" : "outlined"} color="primary" onClick={() => setUserPlays("tijera")}>Tijera</Button>
+                            <Button fullWidth variant={userPlays === "tijera" ? "contained" : "outlined"} color="primary" onClick={() => handleClick('tijera')}>Tijera</Button>
                         </Grid>
                     </Grid>
                     </>

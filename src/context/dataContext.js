@@ -11,15 +11,23 @@ const DataProvider = ({children}) => {
     const [rivals, setRivals] = useState(false);
     const [games, setgames] = useState(false);
     const [activeGame, setActiveGame] = useState(null);
+    const [loading, setloading] = useState()
+
+    const getData = async () => {
+        if(isUserAuthenticated()){
+            setloading(true);
+            const players = await playersRequest();
+            setRivals(players); 
+            const games = await getGamesRequest();
+            setgames(games);
+            setloading(false);
+        }
+    }
+
 
     useEffect(() => {
         const getPlayers = async string => {
-            if(isUserAuthenticated()){
-                const players = await playersRequest();
-                setRivals(players); 
-                const games = await getGamesRequest();
-                setgames(games);
-            }
+            getData();
         }
         getPlayers();
     },[auth])
@@ -32,10 +40,12 @@ const DataProvider = ({children}) => {
                 rivals,
                 games,
                 activeGame,
+                loading,
                 setauth,
                 setRivals,
                 setgames,
-                setActiveGame
+                setActiveGame,
+                getData
             }}
         >
             {children}

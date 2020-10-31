@@ -7,6 +7,7 @@ export const getGamesRequest = async () => {
         return ({
             games: allGames.sort((a,b) => a.updatedAt > b.updatedAt), 
             id: response.data.playerId,
+            lastResponse: response
         });
     } catch (error) {
         

@@ -74,11 +74,12 @@ const Game = () => {
             const play = async () => {
                 const response = await responseGame(activeGame.game._id, userPlays);
                 const {game} = response;
-                console.log(game);
-                const updateGameIndex = games.games.findIndex(game => response.game._id  === game._id)
-                const arrayCopy = [...games.games]
-                arrayCopy[updateGameIndex] = {game}
-                setgames(arrayCopy);
+                const updateGameIndex = games.games.findIndex(game => response.game._id  === game._id);
+
+                setgames({
+                    games: [...games.games.splice(), games.games[updateGameIndex] = game],
+                    id: games.id
+                });
                 setActiveGame({game: game}) 
             }
             play();

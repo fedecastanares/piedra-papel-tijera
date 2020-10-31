@@ -8,7 +8,7 @@ axiosApiInstance.interceptors.request.use(
     const token = getToken();
     config.headers = { 
       'Authorization': `Bearer ${token}`,
-      'Accept': 'application/json'
+      'Content-Type': 'application/json'
     }
     return config;
   },

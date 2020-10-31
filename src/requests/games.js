@@ -12,3 +12,17 @@ export const getGamesRequest = async () => {
         
     }
 }
+
+export const responseGame = async (id, rivalPlay) => {
+    const data = {
+        "rivalPlay": rivalPlay,
+        "status" : "completed",
+    }
+    try {
+        const response = await axiosApiInstance.post(`http://${process.env.REACT_APP_BASE_URL}:${process.env.REACT_APP_PORT}/games/${id}`, data
+        )
+        return response.data
+    } catch (error) {
+        console.log(error);
+    }
+}

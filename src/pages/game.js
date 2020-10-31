@@ -3,8 +3,9 @@ import {DataContext} from '../context/dataContext'
 import { makeStyles } from '@material-ui/core/styles';
 import {Container, Grid,  Button} from '@material-ui/core'
 import Status from '../components/status';
-import PlayerPlays from '../components/playerPlays';
+import Results from '../components/results';
 import {getUser} from '../requests/auth'
+import {responseGame} from '../requests/games';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -25,19 +26,23 @@ const Game = () => {
         switch(activeGame.game.status){
             case 'pending':
                  if (whoIs === 'idHost'){
-                     console.log('1')
+                    //console.log('1')
                     return true
                 } else if( whoIs === 'idRival' && userPlays === ''){
-                    console.log('2')
+                    //console.log('2')
                     return true
                 } else {
+                    /*
                     console.log('3')
                     console.log(userPlays === '')
                     console.log(whoIs === 'idRival')
+                    */
                     return false
                 }
             case 'newGame': 
                 return userPlays === ''
+            case 'completed': 
+                return true
             default:
                 console.log('entro en default')
         }
@@ -65,18 +70,30 @@ const Game = () => {
                 setActiveGame(null);
             }
             newGame();
+        } else if(activeGame.game.status === "pending") {
+            const play = async () => {
+                const response = await responseGame(activeGame.game._id, userPlays);
+                const {game} = response;
+                console.log(game);
+                const updateGameIndex = games.games.findIndex(game => response.game._id  === game._id)
+                const arrayCopy = [...games.games]
+                arrayCopy[updateGameIndex] = {game}
+                setgames(arrayCopy);
+                setActiveGame({game: game}) 
+            }
+            play();
         }
     }
 
     return ( 
         <>
             <Container className={classes.container}>
-                <Grid container spacing={3} style={{height: '88%'}}>
+                <Grid container spacing={3} style={{height: '80%', marginTop: '5%'}}>
                     <Grid item xs={12}>
                         <Status whoIs={whoIs} />
                     </Grid>
                     <Grid item xs={12}>
-                        <PlayerPlays 
+                        <Results 
                         userPlays={userPlays} 
                         setUserPlays={setUserPlays} 
                         playerPlays={playerPlays}/>
@@ -97,7 +114,8 @@ const Game = () => {
                             variant="contained" 
                             color="primary" 
                             disabled={conditionalButton} 
-                            onClick={handlePlays}>{conditionalButton ? "Esperando" : `Jugar  ${userPlays}`} 
+                            onClick={handlePlays}>
+                                {conditionalButton ? "Esperando" : `Jugar  ${userPlays}`} 
                         </Button>
                     </Grid> 
                 </Grid>

@@ -13,27 +13,34 @@ const useStyles = makeStyles((theme) => ({
     },
     divider: {
         backgroundColor: theme.palette.divider,
+    },
+    status: {
+        marginTop: '0.2rem',
+        fontSize: '0.8rem',
+        color: theme.palette.fontColorLight,
     }
   }));
 
-const ListGames = ({listGames, text}) => {
+const ListGames = ({list, text}) => {
     const classes = useStyles();
     const {games, setActiveGame} = useContext(DataContext);
     
     const handleClick = id => {
-        const dataGame = listGames.games.find(game => game._id === id);
-        setActiveGame({game:dataGame});
+        const dataGame = list.find(game => game._id === id);
+        setActiveGame({
+            game:dataGame
+        });
     }
     
     return ( 
        <>
            <Grid container>
                <Grid item xs={12}>
-                   <Typography variant="h3" component="h3" gutterBottom color='primary' align='center' >{text}</Typography></Grid>
+                   <Typography variant="h5" component="h5" gutterBottom color='primary' >{text}</Typography></Grid>
                <Grid item xs={12}>
                    <div className={classes.root}>
                        <List component="nav" aria-label="players">
-                           {listGames && games ? listGames.map(game => (
+                           {list && games ? list.map(game => (
                                <Fragment key={game._id}  >
                                        <ListItem button onClick={() => handleClick(game._id)}>
                                            <ListItemText >
@@ -45,12 +52,12 @@ const ListGames = ({listGames, text}) => {
                                                            gutterBottom 
                                                            color='inherit' 
                                                            align='center' >
-                                                               {"Rival "+ games.id === game.idRival ? game.nameHost : game.nameRival}
+                                                               Rival {games.id === game.idRival ? game.nameHost : game.nameRival}
                                                        </Typography> 
-                           <p>{games.id}  =  {game.idRival}</p>
                                                    </Grid>
                                                    <Grid item>
                                                        <Typography 
+                                                           className={classes.status}
                                                            variant="body1" 
                                                            component="p" 
                                                            gutterBottom 
@@ -66,7 +73,7 @@ const ListGames = ({listGames, text}) => {
                                </Fragment>
                            )): 
                            <Grid container justify='center'>
-                               <CircularProgress />
+                               <CircularProgress style={{padding: 20}}/>
                            </Grid>
                            }
                        </List>

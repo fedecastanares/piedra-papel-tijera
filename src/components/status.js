@@ -10,7 +10,7 @@ const Status = ({whoIs}) => {
                 return <Typography variant="body1" component="p" gutterBottom color='inherit' align='center' >Esperando que juegue el oponente</Typography>} 
             else{
                 return <Typography variant="body1" component="p" gutterBottom color='inherit' align='center' >El rival esta esperando que juegues</Typography>}
-        case 'finish':
+        case 'completed':
             return <Typography variant="body1" component="p" gutterBottom color='inherit' align='center' >Partida completada</Typography> 
         case 'rejected':
             return <Typography variant="body1" component="p" gutterBottom color='inherit' align='center' >El jugador no acepto la solicitud</Typography>

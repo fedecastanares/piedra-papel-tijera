@@ -2,9 +2,9 @@ import {axiosApiInstance} from './instance';
 
 import {authenticateUser, dataUser} from './auth';
 
-export const loginRequest = async (user, password) => {
+export const loginRequest = async ({email, password}) => {
     try {
-        var data = JSON.stringify({"email": user,"password" : password});
+        var data = JSON.stringify({"email": email,"password" : password});
         const response = await axiosApiInstance.post(`/login`, data, 
         {headers: {'Content-Type': 'application/json'}})
         authenticateUser(response.data.user.token);

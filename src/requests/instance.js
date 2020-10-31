@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {getToken, deauthenticateUser} from './auth';
 
-export const axiosApiInstance = axios.create();
+export const axiosApiInstance = axios.create({baseURL: `${process.env.REACT_APP_PROTOCOL}://${process.env.REACT_APP_BASE_URL}`});
 
 axiosApiInstance.interceptors.request.use(
   async config => {

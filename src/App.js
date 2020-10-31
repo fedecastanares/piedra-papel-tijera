@@ -1,33 +1,27 @@
 import React from 'react'
-import {BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom';
-import Admin from './pages/admin';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import Login from './pages/login';
-import Layout from './components/layout';
+import User from './pages/user';
 import Palette from './palette';
+import DataProvider from './context/dataContext';
+import PrivateRoute from './components/privateRoute';
 
 
 function App() {
   return (
     <>
-    <Palette>
-      <Layout>
+    <DataProvider>
+      <Palette>
         <Router>
           <Switch>
-            <Route exact path='/'  render={(props) => <Admin props={props}/> }  />
-            <Route exact path='/login'  render={(props) => <Login props={props}/> }/>
-            <Route exact path='/user'  render={(props) => <Login props={props}/> }/>
-            <Route exact path='/play'  render={(props) => <Login props={props}/> }/>
+            <Route exact path="/login" component={Login} />
+            <PrivateRoute exact path='/' component={User} />
           </Switch>
         </Router>
-      </Layout>
-    </Palette>
+      </Palette>
+    </DataProvider>
     </>
   );
 }
-
-/* Ejemplos redirect login-redux 
-  <Route exact path='/signup' render={(props) => isUserAuthenticated() ? <Redirect to='/users' /> : <Signup props={props} />} />
-  <Route exact path='/users' render={(props) => isUserAuthenticated() ? <Users props={props}/> : <Redirect to='/' />} />
-*/
 
 export default App;

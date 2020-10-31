@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useContext, useState} from 'react';
 import {Avatar, Button, CssBaseline, TextField, FormControlLabel, Checkbox, Link, Grid, Typography, Container} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
-
+import {DataContext} from '../context/dataContext'
 import {loginRequest} from '../requests/login'
+import { isUserAuthenticated } from '../requests/auth';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -25,13 +26,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn() {
+export default function SignIn({history}) {
   const classes = useStyles();
-  const [user, setUser] = React.useState({})
+  const {setauth} = useContext(DataContext)
+  const [user, setUser] = useState({})
 
   const handleSubmit = e => {
     e.preventDefault();
-    loginRequest(user.email, user.password);
+    const login = async (user) => {
+      await loginRequest(user.email, user.password);
+      if (isUserAuthenticated()){
+        setauth(true);
+        history.push('/');
+      }
+    }
+    login(user);
   }
 
   const onChange = e => {

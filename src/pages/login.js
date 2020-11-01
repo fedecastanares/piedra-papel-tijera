@@ -1,6 +1,6 @@
 import React from 'react';
-import Login from '../components/login'
-import Copyright from '../components/copyright'
+import Login from '../components/login/login'
+import Copyright from '../components/login/copyright'
 
 
 const LoginPage = ({history}) => {

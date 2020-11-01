@@ -3,7 +3,7 @@ import React from 'react';
 import {Link, IconButton, Grid, Typography} from '@material-ui/core';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import {deauthenticateUser, getUser} from '../requests/auth'
+import {deauthenticateUser, getUser} from '../../requests/auth'
 
 const LogOut = () => {
 

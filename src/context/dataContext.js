@@ -11,7 +11,9 @@ const DataProvider = ({children}) => {
     const [rivals, setRivals] = useState(false);
     const [games, setgames] = useState(false);
     const [activeGame, setActiveGame] = useState(null);
-    const [loading, setloading] = useState()
+    const [loading, setloading] = useState('');
+    const [userPlays, setUserPlays] = useState('');
+    const [open, setOpen] = useState(false);
 
     const getData = async () => {
         if(isUserAuthenticated()){
@@ -41,11 +43,15 @@ const DataProvider = ({children}) => {
                 games,
                 activeGame,
                 loading,
+                userPlays,
+                open,
                 setauth,
                 setRivals,
                 setgames,
                 setActiveGame,
-                getData
+                getData,
+                setUserPlays,
+                setOpen
             }}
         >
             {children}

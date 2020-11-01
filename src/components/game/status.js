@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import { DataContext } from '../context/dataContext';
+import { DataContext } from '../../context/dataContext';
 import {Typography} from '@material-ui/core';
 
 const Status = ({whoIs}) => {

@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
 const Results = ({userPlays, setUserPlays, playerPlays}) => {
     const classes = useStyles();
     const {activeGame, games} = useContext(DataContext);
-    const whoIam = games.id == activeGame.game.idHost ? "host" : 'rival';
+    const whoIam = games.id === activeGame.game.idHost ? "host" : 'rival';
 
     const handleClick = userPlay => {
         setUserPlays(userPlay)
@@ -92,7 +92,7 @@ const Results = ({userPlays, setUserPlays, playerPlays}) => {
             const alertPropierties = () => {
                 if (activeGame.game.idWin === 'tie') {
                     return {severity: "warning", text: "Emapate"}
-                } else if (games.id == activeGame.game.idWin) {
+                } else if (games.id === activeGame.game.idWin) {
                     return {severity: "success", text: "Ganaste"}
                 } else {
                     return {severity: "error", text: "Perdiste"}

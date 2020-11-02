@@ -1,5 +1,5 @@
 import React, {useContext, useState} from 'react';
-import {Avatar, Button, CssBaseline, TextField, FormControlLabel, Checkbox, Link, Grid, Typography, Container} from '@material-ui/core';
+import {Avatar, Button, CssBaseline, TextField, Typography, Container} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import {DataContext} from '../context/dataContext'

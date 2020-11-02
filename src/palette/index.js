@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { DataContext } from '../context/dataContext';
 
 const Palette = ({children}) => {
-    const [darkmode, setdarkMode] = React.useState(false);
+    const {darkmode} = useContext(DataContext)
 
     const theme = createMuiTheme({
         palette: {

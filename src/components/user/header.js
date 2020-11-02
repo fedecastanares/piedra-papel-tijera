@@ -19,7 +19,7 @@ const LogOut = () => {
                     <AccountCircleIcon size='medium' />
                 </Grid>
                 <Grid item>
-                    <Typography variant="body1" component="p" gutterBottom color='inherit' align='center' >{getUser()}</Typography>
+                    <Typography variant="body1" component="p" gutterBottom color='inherit' align='center' >{getUser() ? getUser().replace(/['"]+/g, '') : null}</Typography>
                 </Grid>
             </Grid>
         </Grid>

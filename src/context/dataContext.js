@@ -7,6 +7,7 @@ export const DataContext = createContext();
 
 const DataProvider = ({children}) => {
 
+    const [darkmode, setdarkMode] = React.useState(false);
     const [auth, setauth] = useState(undefined);
     const [rivals, setRivals] = useState(false);
     const [games, setgames] = useState(false);
@@ -47,6 +48,7 @@ const DataProvider = ({children}) => {
                 userPlays,
                 open,
                 error,
+                darkmode,
                 setauth,
                 setRivals,
                 setgames,
@@ -54,7 +56,8 @@ const DataProvider = ({children}) => {
                 getData,
                 setUserPlays,
                 setOpen,
-                setError
+                setError,
+                setdarkMode
             }}
         >
             {children}

@@ -44,6 +44,11 @@ export default function SignIn({history}) {
           .min(7)
           .max(50)
           .required(),
+      passwordVerify: Joi.string()
+          .min(7)
+          .max(50)
+          .required(),
+
 
       email: Joi.string()
           .email({ tlds: {allow: false} })
@@ -52,7 +57,7 @@ export default function SignIn({history}) {
     const validationResult = schema.validate(user)
     if (!validationResult.error && user.password === user.passwordVerify) {
       const signUp = async (user) => {
-        await signUpRequest(user.name, user.email.toLowerCase(), user.password);
+        await signUpRequest(user.name, user.email.toLowerCase().trim(), user.password);
         if (isUserAuthenticated()){
           setauth(true);
           setError(false)

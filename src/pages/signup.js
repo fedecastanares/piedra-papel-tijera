@@ -52,7 +52,7 @@ export default function SignIn({history}) {
     const validationResult = schema.validate(user)
     if (!validationResult.error && user.password === user.passwordVerify) {
       const signUp = async (user) => {
-        await signUpRequest(user.name, user.email, user.password);
+        await signUpRequest(user.name, user.email.toLowerCase(), user.password);
         if (isUserAuthenticated()){
           setauth(true);
           setError(false)

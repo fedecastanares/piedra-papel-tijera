@@ -47,7 +47,7 @@ export default function SignIn({history}) {
     const validationResult = schema.validate(user)
     if (!validationResult.error) {
       const login = async (user) => {
-        const successfull = await loginRequest(user.email.toLowerCase().trim(), user.password);
+        const successfull = await loginRequest(user.email.toLowerCase(), user.password);
         if (successfull){
           setauth(true);
           setError(false)

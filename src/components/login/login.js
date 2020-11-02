@@ -90,6 +90,7 @@ export default function SignIn({history}) {
             label="Email Address"
             name="email"
             autoComplete="email"
+            type='email'
             autoFocus
             onChange={onChange}
           />

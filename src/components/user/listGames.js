@@ -58,7 +58,7 @@ const ListGames = ({list, text, children}) => {
                     </Grid>
                <Grid item xs={12}>
                     <List component="nav" aria-label="players" className={classes.list}>
-                        {list && games ? list.map(game => (
+                        {list.length() > 0 && games ? list.map(game => (
                             <Fragment key={game._id}  >
                                     <ListItem button onClick={() => handleClick(game._id)}>
                                         <ListItemText >

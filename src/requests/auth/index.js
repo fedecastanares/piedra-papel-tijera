@@ -22,7 +22,7 @@ export const getToken = () => {
 
 
 export const getUser = () => {
-    return localStorage.getItem('user')
+    return localStorage.getItem('user').replace(/['"]+/g, '') 
 }
 
 export const getNewToken = () => {

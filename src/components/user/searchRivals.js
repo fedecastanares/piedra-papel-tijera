@@ -78,7 +78,7 @@ const SearchRivals = () => {
                 </Grid>
                 <Grid item xs={12}>
                     <List component="nav" aria-label="players" className={classes.list}>
-                        {rivals ? searchString === '' ? 
+                        {rivals.players !== undefined ? searchString === '' ? 
                             rivals.players.map(rival => (
                                 <RenderedList key={rival._id} rival={rival} />
                             ))

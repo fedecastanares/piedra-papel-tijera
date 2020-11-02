@@ -9,7 +9,8 @@ export const loginRequest = async (email, password) => {
         {headers: {'Content-Type': 'application/json'}})
         authenticateUser(response.data.user.token);
         dataUser(response.data.user.name);
+        return true;
     } catch (error) {
-        console.log(error);
+        return false;
     }
 }

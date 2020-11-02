@@ -2,10 +2,12 @@ import React, {useContext, useState} from 'react';
 import {Avatar, Button, CssBaseline, TextField, FormControlLabel, Checkbox, Link, Grid, Typography, Container} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
-import {DataContext} from '../../context/dataContext'
-import {loginRequest} from '../../requests/login'
-import Message from '../../components/message';
+import {DataContext} from '../context/dataContext'
+import {signUpRequest} from '../requests/signup'
+import { isUserAuthenticated } from '../requests/auth';
 import Joi from '@hapi/joi'
+import Message from '../components/message'
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -23,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(1),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2),
+    marginTop: theme.spacing(3),
   },
 }));
 
@@ -35,6 +37,9 @@ export default function SignIn({history}) {
   const handleSubmit = e => {
     e.preventDefault();
     const schema = Joi.object({
+      name: Joi.string()
+          .required(),
+
       password: Joi.string()
           .min(7)
           .max(50)
@@ -43,20 +48,18 @@ export default function SignIn({history}) {
       email: Joi.string()
           .email({ tlds: {allow: false} })
           .required()
-    })
+  })
     const validationResult = schema.validate(user)
-    if (!validationResult.error) {
-      const login = async (user) => {
-        const successfull = await loginRequest(user.email, user.password);
-        if (successfull){
+    if (!validationResult.error && user.password === user.passwordVerify) {
+      const signUp = async (user) => {
+        await signUpRequest(user.name, user.email, user.password);
+        if (isUserAuthenticated()){
           setauth(true);
           setError(false)
           history.push('/');
-        } else {
-          setError({severity : 'warning', message: "Usuario o contraseña invalida"})
         }
       }
-      login(user);
+      signUp(user);
     } else {
       setError({severity : 'warning', message: "Usuario o contraseña invalida"})
     }
@@ -77,10 +80,22 @@ export default function SignIn({history}) {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Sign up
         </Typography>
         <Message/>
         <form className={classes.form} noValidate onSubmit={handleSubmit}>
+        <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="name"
+            label="Name"
+            name="name"
+            autoComplete="name"
+            autoFocus
+            onChange={onChange}
+          />
           <TextField
             variant="outlined"
             margin="normal"
@@ -105,26 +120,36 @@ export default function SignIn({history}) {
             autoComplete="current-password"
             onChange={onChange}
           />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="passwordVerify"
+            label="Repeat password"
+            type="password"
+            id="passwordVerify"
+            autoComplete="current-password"
+            onChange={onChange}
           />
+           <Button
+            fullWidth
+            variant="outlined"
+            color="secondary"
+            className={classes.submit}
+            onClick={()=> history.push('/')}
+          >
+            Cancelar
+          </Button>
           <Button
             type="submit"
             fullWidth
             variant="contained"
             color="primary"
-            className={classes.submit}
+            style={{marginTop: 15}}
           >
-            Sign In
+            Sign Up
           </Button>
-          <Grid container justify='flex-end'>
-            <Grid item>
-              <Link href="/signup" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
-          </Grid>
         </form>
       </div>
     </Container>

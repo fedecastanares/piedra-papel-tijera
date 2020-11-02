@@ -5,6 +5,7 @@ import User from './pages/user';
 import Palette from './palette';
 import DataProvider from './context/dataContext';
 import PrivateRoute from './components/privateRoute';
+import SignUp from './pages/signup'
 
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
         <Router>
           <Switch>
             <Route exact path="/login" component={Login} />
+            <Route exact path="/signup" component={SignUp} />
             <PrivateRoute exact path='/' component={User} />
           </Switch>
         </Router>

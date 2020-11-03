@@ -54,7 +54,7 @@ const SearchRivals = () => {
                                 <Typography variant="body1" component="p" gutterBottom color='inherit' align='center' >{rival.name}</Typography> 
                             </Grid>
                             <Grid item>
-                                <Typography className={classes.id} variant="body1" component="p" gutterBottom color='inherit' align='center' >{"id: " + rival._id}</Typography>
+                                
                             </Grid>
                         </Grid>
                     </ListItemText>

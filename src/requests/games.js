@@ -9,7 +9,7 @@ export const getGamesRequest = async () => {
             id: response.data.playerId
         });
     } catch (error) {
-        
+        console.log(error);
     }
 }
 
@@ -19,8 +19,7 @@ export const responseGame = async (id, rivalPlay) => {
         "status" : "completed",
     }
     try {
-        const response = await axiosApiInstance.post(`/games/${id}`, data
-        )
+        const response = await axiosApiInstance.post(`/games/${id}`, data)
         return response.data
     } catch (error) {
         console.log(error);

@@ -3,7 +3,7 @@ import {getToken, deauthenticateUser} from './auth';
 
 // `${process.env.REACT_APP_PROTOCOL}://${process.env.REACT_APP_BASE_URL}`
 
-export const axiosApiInstance = axios.create({baseURL: `${process.env.REACT_APP_PROTOCOL}://${process.env.REACT_APP_BASE_URL}`, timeout: 200,});
+export const axiosApiInstance = axios.create({baseURL: `${process.env.REACT_APP_PROTOCOL}://${process.env.REACT_APP_BASE_URL}:${process.env.REACT_APP_PORT}`,});
 
 axiosApiInstance.interceptors.request.use(
   async config => {
@@ -24,6 +24,7 @@ axiosApiInstance.interceptors.response.use((response) => {
   const originalRequest = error.config;
   if ((error.response.status === 403 || error.response.status === 401) && !originalRequest._retry) {
     deauthenticateUser();
+    window.location = "/";
     return;
   }
   return Promise.reject(error);

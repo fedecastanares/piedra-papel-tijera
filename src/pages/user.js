@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import SearchRivals from '../components/user/searchRivals';
 import ListGames from '../components/user/listGames';
-import Header from '../components/user/header';
+import MyAccountSection from '../components/user/header';
 import Game from './game';
 import {DataContext} from '../context/dataContext';
 import {Container, Grid, Button, Typography, Snackbar} from '@material-ui/core';
@@ -62,7 +62,7 @@ const PlayPage = () => {
             <>
             <Container className={classes.root}>
                 <Grid container className={classes.aLittleAir} justify='space-between' alignItems='center'>
-                    <Header/>
+                    <MyAccountSection/>
                 </Grid>
                 <Grid container className={classes.aLittleAir} >
                     <Button 

@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 
 const PlayPage = () => {
     const classes = useStyles();
-    const {games, activeGame, getData, loading, open, setOpen, setActiveGame} = useContext(DataContext);
+    const {games, activeGame, getData, loading, open, setOpen} = useContext(DataContext);
 
     const handleClick = () => {
         getData()

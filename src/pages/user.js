@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext} from 'react';
 import SearchRivals from '../components/user/searchRivals';
 import ListGames from '../components/user/listGames';
 import MyAccountSection from '../components/user/header';
@@ -35,10 +35,6 @@ const useStyles = makeStyles((theme) => ({
 const PlayPage = () => {
     const classes = useStyles();
     const {games, activeGame, getData, loading, open, setOpen, setActiveGame} = useContext(DataContext);
-
-    useEffect(() =>{
-        setActiveGame(null);
-    });
 
     const handleClick = () => {
         getData()

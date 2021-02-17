@@ -27,6 +27,7 @@ axiosApiInstance.interceptors.response.use((response) => {
     window.location = "/";
     return;
   }
+  window.location = "/";
   return Promise.reject(error);
 });
 

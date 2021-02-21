@@ -57,52 +57,54 @@ const PlayPage = () => {
         )
     }
 
-    if(!activeGame) {
-        return ( 
-            <>
-            <Container className={classes.root}>
-                <Grid container className={classes.aLittleAir} justify='space-between' alignItems='center'>
-                    <MyAccountSection/>
-                </Grid>
-                <Grid container className={classes.aLittleAir} >
-                    <Button 
-                        fullWidth 
-                        variant="contained" 
-                        className={classes.button}
-                        onClick={handleClick}
-                        >
-                            <Grid container spacing={2} justify='center' alignItems='center'>
-                                <Grid item>
-                                    <Typography variant="body1" component="p" gutterBottom color='inherit' align='center' >Actualizar</Typography>
-                                </Grid>
-                                <Grid item>
-                                    <AutorenewIcon className={loading ? 'animate__animated animate__rotateIn animate__repeat-20' : ''} />
-                                </Grid>
+    return ( 
+        <>
+        {!activeGame &&
+        <Container className={classes.root}>
+            <Grid container className={classes.aLittleAir} justify='space-between' alignItems='center'>
+                <MyAccountSection/>
+            </Grid>
+            <Grid container className={classes.aLittleAir} >
+                <Button 
+                    fullWidth 
+                    variant="contained" 
+                    className={classes.button}
+                    onClick={handleClick}
+                    >
+                        <Grid container spacing={2} justify='center' alignItems='center'>
+                            <Grid item>
+                                <Typography variant="body1" component="p" gutterBottom color='inherit' align='center' >Actualizar</Typography>
                             </Grid>
-                        </Button>
+                            <Grid item>
+                                <AutorenewIcon className={loading ? 'animate__animated animate__rotateIn animate__repeat-20' : ''} />
+                            </Grid>
+                        </Grid>
+                    </Button>
+            </Grid>
+            <Grid container spacing={3} className={classes.lists}>
+                <Grid item xs={12} md={4}>
+                    <SearchRivals/>
                 </Grid>
-                <Grid container spacing={3} className={classes.lists}>
-                    <Grid item xs={12} md={4}>
-                        <SearchRivals/>
-                    </Grid>
-                    <Grid item xs={12} md={4}>
-                        <ListGames text='Pendientes' list={games  && games.games.filter(game => game.status === 'pending')} />
-                    </Grid>
-                    <Grid item xs={12} md={4}>
-                        <ListGames text='Historial' list={games && games.games.filter(game => game.status !== 'pending')} >
-                            <HistoryRank list={games && games.games.filter(game => game.status !== 'pending')} />
-                        </ListGames>
-                    </Grid>
+                <Grid item xs={12} md={4}>
+                    <ListGames text='Pendientes' list={games  && games.games.filter(game => game.status === 'pending')} />
                 </Grid>
-                <Snack/> 
-            </Container>
-            </>
-         );
-    } else if (activeGame){
-        return <Game/>
-    }
+                <Grid item xs={12} md={4}>
+                    <ListGames text='Historial' list={games && games.games.filter(game => game.status !== 'pending')} >
+                        <HistoryRank list={games && games.games.filter(game => game.status !== 'pending')} />
+                    </ListGames>
+                </Grid>
+            </Grid>
+            <Snack/> 
+        </Container> 
+        }
 
-    
+        
+        {activeGame && 
+            <Game/>
+         }
+        </>
+     );
+ 
 }
  
 export default PlayPage;
